@@ -9,6 +9,17 @@ export function qs(selector, parent = document) {
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
+
+export function getCartItems() {
+  try {
+    const storedCart = getLocalStorage("so-cart");
+    if (Array.isArray(storedCart)) return storedCart;
+    return storedCart && typeof storedCart === "object" ? [storedCart] : [];
+  } catch {
+    return [];
+  }
+}
+
 // save data to local storage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
