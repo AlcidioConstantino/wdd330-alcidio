@@ -178,6 +178,25 @@ button {
   padding: 1rem;
 }
 
+.category-nav, .category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem auto;
+}
+
+.category-nav a, .category-card {
+  color: var(--dark-grey);
+  text-decoration: none;
+  border: 1px solid var(--light-grey);
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.category-card { width: min(42%, 180px); display: grid; justify-items: center; gap: .5rem; }
+.category-card img { width: 90px; height: 90px; }
+
 .product-list {
   display: flex;
   flex-flow: row wrap;
