@@ -114,6 +114,40 @@ button {
   border-bottom: 2px solid var(--primary-color);
 }
 
+.breadcrumbs {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--light-grey);
+  font-size: var(--small-font);
+}
+
+.breadcrumbs[hidden] {
+  display: none;
+}
+
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.breadcrumbs li + li::before {
+  content: "→";
+  margin-right: 0.5rem;
+  color: var(--tertiary-color);
+}
+
+.breadcrumbs a {
+  color: var(--secondary-color);
+  text-underline-offset: 0.15em;
+}
+
+.breadcrumbs a:focus-visible {
+  outline: 2px solid var(--tertiary-color);
+  outline-offset: 2px;
+}
+
 /* End utility classes */
 
 /* Cart icon styles */

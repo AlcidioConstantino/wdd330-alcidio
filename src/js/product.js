@@ -2,13 +2,19 @@ import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import { getParam } from "./utils.mjs";
 import { appendProductToCart } from "./cartHelpers.js";
+import Breadcrumbs from "./Breadcrumbs.mjs";
 
 const dataSource = new ProductData("tents");
+const breadcrumbs = new Breadcrumbs();
 
 async function loadProductDetails() {
   const productId = getParam("product");
   const section = document.querySelector(".product-detail");
-  if (!productId || !section) return;
+  if (!section) return;
+  if (!productId) {
+    breadcrumbs.renderProduct(section.dataset.category);
+    return;
+  }
   try {
     const product = await dataSource.findProductById(productId);
     if (!product) throw new Error("Product not found");
@@ -30,6 +36,7 @@ async function loadProductDetails() {
       <p class="product__color">${product.Colors?.[0]?.ColorName || ""}</p>
       <p class="product__description">${product.DescriptionHtmlSimple || ""}</p>
       <div class="product-detail__add"><button id="addToCart" data-id="${product.Id}">Add to Cart</button></div>`;
+    breadcrumbs.renderProduct(product.Category || getParam("category"));
     document.title = `Sleep Outside | ${product.Name}`;
     document.getElementById("addToCart").addEventListener("click", addToCartHandler);
   } catch (error) {
