@@ -1,4 +1,5 @@
 import { qs } from "./utils.mjs";
+import Breadcrumbs from "./Breadcrumbs.mjs";
 
 function imagePath(image) {
   if (!image) return "";
@@ -19,7 +20,7 @@ function productCardTemplate(product, category) {
   const image = imagePath(product.Image) || categoryImages[category];
   const id = encodeURIComponent(product.Id);
   return `<li class="product-card">
-    <a href="/product_pages/?product=${id}">
+    <a href="/product_pages/?product=${id}&category=${encodeURIComponent(category)}">
       <img src="${image}" alt="${name}" />
       <h3 class="card__brand">${brand}</h3>
       <h2 class="card__name">${name}</h2>
@@ -33,6 +34,7 @@ export default class ProductList {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
+    this.breadcrumbs = new Breadcrumbs();
   }
 
   async init() {
@@ -48,7 +50,9 @@ export default class ProductList {
   }
 
   renderList(list) {
-    this.listElement.innerHTML = list
+    const products = Array.isArray(list) ? list : [];
+    this.breadcrumbs.renderListing(this.category, products.length);
+    this.listElement.innerHTML = products
       .map((product) => productCardTemplate(product, this.category))
       .join("");
   }
