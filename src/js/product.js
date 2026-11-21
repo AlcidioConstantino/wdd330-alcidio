@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import { getParam } from "./utils.mjs";
 import { appendProductToCart } from "./cartHelpers.js";
@@ -60,6 +60,7 @@ async function addToCartHandler(e) {
     if (!product) throw new Error("Product was not returned by the server");
     addProductToCart(product);
     button.textContent = "Added to Cart";
+    alertMessage(`${product.Name} was added to your cart.`, false);
   } catch (error) {
     console.error("Unable to add product to cart:", error);
     button.textContent = "Try Again";

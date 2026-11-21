@@ -26,3 +26,18 @@ export function setClick(selector, callback) {
   });
   qs(selector).addEventListener("click", callback);
 }
+
+export function alertMessage(message, scroll = true) {
+  const main = qs("main");
+  if (!main) return;
+  let alert = qs("[data-alert-message]", main);
+  if (!alert) {
+    alert = document.createElement("div");
+    alert.dataset.alertMessage = "";
+    alert.className = "alert-message";
+    alert.setAttribute("role", "alert");
+    main.prepend(alert);
+  }
+  alert.textContent = typeof message === "string" ? message : JSON.stringify(message);
+  if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
+}
