@@ -1,8 +1,19 @@
 import { resolve } from "path";
+import { cpSync } from "node:fs";
 import { defineConfig } from "vite";
 
 export default defineConfig({
   root: "src/",
+  plugins: [
+    {
+      name: "copy-images-to-build",
+      closeBundle() {
+        cpSync(resolve(__dirname, "src/images"), resolve(__dirname, "dist/images"), {
+          recursive: true,
+        });
+      },
+    },
+  ],
 
   build: {
     outDir: "../dist",
